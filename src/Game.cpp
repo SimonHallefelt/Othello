@@ -1,5 +1,6 @@
 #include "../include/Board.hpp"
 #include "../include/LegalMoves.hpp"
+#include "../include/Player.hpp"
 #include <iostream>
 using namespace std;
 
@@ -15,4 +16,7 @@ void startGame() {
         }
         cout << endl;
     }
+    Player playerBlack(-1), playerWhite(1);
+    cout << "playerBlack " << playerBlack.getPlayer() << endl;
+    cout << "playerWhite " << playerWhite.getPlayer() << endl;
 }
