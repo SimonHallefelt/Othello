@@ -1,4 +1,6 @@
 #include "../include/Board.hpp"
+#include "../include/LegalMoves.hpp"
+#include <cassert>
 
 using namespace std;
 
@@ -47,4 +49,19 @@ bool Board::gameComplete() {
         }
     }
     return true;
+}
+
+void Board::makeMove(const Int2D pos) {
+    if (pos.y == -1 && pos.x == -1) { // cant make a move
+        playersTurn *= -1;
+        return;
+    }
+    assert(isMoveLegal(board, playersTurn, pos));
+    board[pos.y][pos.x] = playersTurn;
+    flipAllInBetween(pos);
+    playersTurn *= -1;
+}
+
+void Board::flipAllInBetween(Int2D pos) {
+
 }
