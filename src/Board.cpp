@@ -15,10 +15,11 @@ Board::~Board() {
 
 void Board::newBoard() {
     board = {{0}};
-    board[3][4] = 1;
-    board[4][3] = 1;
-    board[3][3] = -1;
-    board[4][4] = -1;
+    board[3][4] = -1;
+    board[4][3] = -1;
+    board[3][3] = 1;
+    board[4][4] = 1;
+    playersTurn = -1; // black moves first
 };
 
 void Board::printBoard() const {
@@ -30,3 +31,11 @@ void Board::printBoard() const {
         cout << endl;
     }
 };
+
+array<array<int, 8>, 8> Board::getBoard() const {
+    return board;
+}
+
+int Board::getPlayersTurn() const {
+    return playersTurn;
+}

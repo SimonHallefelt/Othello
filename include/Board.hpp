@@ -7,6 +7,7 @@
 class Board {
     private:
         std::array<std::array<int, 8>, 8> board;
+        int playersTurn;
     
     public:
         Board();
@@ -14,6 +15,9 @@ class Board {
     
         void newBoard();
         void printBoard() const;
+
+        std::array<std::array<int, 8>, 8> Board::getBoard() const;
+        int Board::getPlayersTurn() const;
     };
 
 #endif
