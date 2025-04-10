@@ -1,24 +1,19 @@
 #include <array>
-
-struct direction {
-    int dir_y;
-    int dir_x;
-};
+#include "../include/Int2D.hpp"
 
 bool isMoveLegal(const std::array<std::array<int, 8>, 8>& board, const int player , const int y, const int x) {
-    std::array<direction, 8> directions = {{
+    std::array<Int2D, 8> directions = {{
         {0, 1}, {1, 0}, {0, -1}, {-1, 0}, {-1, -1}, {1, 1}, {1, -1}, {-1, 1}
     }};
 
-    int pos_y, pos_x, value;
+    int value;
     bool pass;
-    for (const auto& [dir_y, dir_x] : directions) {
-        pos_y = y + dir_y;
-        pos_x = x + dir_x;
+    for (const auto& dir : directions) {
+        Int2D pos(y + dir.y, x + dir.x);
         pass = false;
 
-        while (pos_x >= 0 && pos_y >= 0 && pos_x < 8 && pos_y < 8) {
-            value = board[pos_y][pos_x];
+        while (pos.x >= 0 && pos.y >= 0 && pos.x < 8 && pos.y < 8) {
+            value = board[pos.y][pos.x];
             if (!value) {
                 break;
             } else if (value == player) {
@@ -27,8 +22,7 @@ bool isMoveLegal(const std::array<std::array<int, 8>, 8>& board, const int playe
             } else {
                 pass = true;
             }
-            pos_y += dir_y;
-            pos_x += dir_x;
+            pos.add(dir);
         }
     }
 

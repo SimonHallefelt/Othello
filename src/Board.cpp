@@ -23,8 +23,8 @@ void Board::newBoard() {
 };
 
 void Board::printBoard() const {
-    for (auto a : board) {
-        for (auto i : a) {
+    for (auto row : board) {
+        for (auto i : row) {
             if (i == -1) cout << i << " ";
             else cout << " " << i << " ";
         }
@@ -38,4 +38,13 @@ array<array<int, 8>, 8> Board::getBoard() const {
 
 int Board::getPlayersTurn() const {
     return playersTurn;
+}
+
+bool Board::gameComplete() {
+    for (auto row : board) {
+        for (auto i : row) {
+            if (!i) return false;
+        }
+    }
+    return true;
 }

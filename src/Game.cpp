@@ -1,6 +1,7 @@
 #include "../include/Board.hpp"
 #include "../include/LegalMoves.hpp"
 #include "../include/Player.hpp"
+#include "../include/Int2D.hpp"
 #include <iostream>
 using namespace std;
 
@@ -19,4 +20,11 @@ void startGame() {
     Player playerBlack(-1), playerWhite(1);
     cout << "playerBlack " << playerBlack.getPlayer() << endl;
     cout << "playerWhite " << playerWhite.getPlayer() << endl;
+
+
+    while (board.gameComplete()) {
+        Int2D pos = {1,0};
+        break;
+    }
+    
 }

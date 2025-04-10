@@ -18,6 +18,7 @@ class Board {
 
         std::array<std::array<int, 8>, 8> Board::getBoard() const;
         int Board::getPlayersTurn() const;
+        bool Board::gameComplete();
     };
 
 #endif
