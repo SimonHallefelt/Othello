@@ -14,7 +14,7 @@ void startGame() {
     board.printBoard();
     while (!board.gameComplete()) {
         Int2D pos = board.getPlayersTurn() == 1 ? playerWhite.move(board.getBoard()) : playerBlack.move(board.getBoard());
-        cout << "player " << board.getPlayersTurn() << " selected move: " << pos << endl;
+        cout << "player " << (board.getPlayersTurn() == 1 ? "White" : "Black") << " selected move: " << pos << endl;
         board.makeMove(pos);
         board.printBoard();
     }
