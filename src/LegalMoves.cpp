@@ -1,5 +1,4 @@
-#include <array>
-#include "../include/Int2D.hpp"
+#include "../include/LegalMoves.hpp"
 
 bool isMoveLegal(const std::array<std::array<int, 8>, 8>& board, const int player , const int y, const int x) {
     std::array<Int2D, 8> directions = {{
@@ -29,13 +28,15 @@ bool isMoveLegal(const std::array<std::array<int, 8>, 8>& board, const int playe
     return false;
 }
 
-std::array<std::array<bool, 8>, 8> getLegalMoves(const std::array<std::array<int, 8>, 8>& board, const int player) {
-    std::array<std::array<bool, 8>, 8> legalMoves = {{false}};
+std::vector<Int2D> getLegalMoves(const std::array<std::array<int, 8>, 8>& board, const int player) {
+    std::vector<Int2D> legalMoves = {};
 
-    for (size_t y = 0; y < 8; y++) {
-        for (size_t x = 0; x < 8; x++) {
+    for (int y = 0; y < 8; y++) {
+        for (int x = 0; x < 8; x++) {
             if (!board[y][x]) {
-                legalMoves[y][x] = isMoveLegal(board, player, y, x);
+                if (isMoveLegal(board, player, y, x)) {
+                    legalMoves.push_back({y,x});
+                }
             }
         }
     }

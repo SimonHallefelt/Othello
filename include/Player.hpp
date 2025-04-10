@@ -2,6 +2,8 @@
 #define Player_hpp
 
 #include <iostream>
+#include "Int2D.hpp"
+#include "LegalMoves.hpp"
 
 class Player
 {
@@ -13,6 +15,7 @@ public:
     ~Player();
 
     int getPlayer() const;
+    Int2D move(std::array<std::array<int, 8>, 8> board);
 };
 
 #endif
