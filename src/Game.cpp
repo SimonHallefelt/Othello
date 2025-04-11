@@ -18,5 +18,5 @@ void startGame() {
         board.makeMove(pos);
         board.printBoard();
     }
-    board.printWinningPlayer();
+    board.printWinner();
 }

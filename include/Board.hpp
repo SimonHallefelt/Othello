@@ -22,7 +22,7 @@ class Board {
         int Board::getPlayersTurn() const;
         bool Board::gameComplete();
         void Board::makeMove(Int2D pos);
-        void Board::printWinningPlayer();
+        void Board::printWinner();
     };
 
 #endif

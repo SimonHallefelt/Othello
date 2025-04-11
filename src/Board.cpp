@@ -43,6 +43,7 @@ int Board::getPlayersTurn() const {
 }
 
 bool Board::gameComplete() {
+    if (!getLegalMoves(board, playersTurn).size() && !getLegalMoves(board, playersTurn*-1).size()) return true;
     for (auto row : board) {
         for (auto i : row) {
             if (!i) return false;
@@ -62,7 +63,7 @@ void Board::makeMove(const Int2D pos) {
     playersTurn *= -1;
 }
 
-void Board::printWinningPlayer() {
+void Board::printWinner() {
     if (!gameComplete()) {
         cout << "game is not finished" << endl;
         return;
