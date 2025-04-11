@@ -9,4 +9,6 @@ bool isMoveLegal(const std::array<std::array<int, 8>, 8>& board, const int playe
 
 std::vector<Int2D> getLegalMoves(const std::array<std::array<int, 8>, 8>& board, int player);
 
+std::vector<Int2D> getPositionsCaptured(const std::array<std::array<int, 8>, 8>& board, const int player, Int2D placement);
+
 #endif

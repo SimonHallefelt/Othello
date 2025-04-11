@@ -63,5 +63,10 @@ void Board::makeMove(const Int2D pos) {
 }
 
 void Board::flipAllInBetween(Int2D pos) {
-
+    vector<Int2D> positionsCaptured = getPositionsCaptured(board, playersTurn, pos);
+    for (const auto& pc : positionsCaptured) {
+        board[pc.y][pc.x] = playersTurn;
+        cout << pc << " ";
+    }
+    cout << endl;
 }
