@@ -9,13 +9,14 @@ class Player
 {
 private:
     const int player;
+    int playerType;
 
 public:
-    Player(const int player);
+    Player(const int player, int playerType);
     ~Player();
 
     int getPlayer() const;
-    Int2D move(std::array<std::array<int, 8>, 8> board);
+    Int2D move(std::array<std::array<int, 8>, 8>& board);
 };
 
 #endif

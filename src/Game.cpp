@@ -9,7 +9,7 @@ using namespace std;
 void startGame() {
     cout << "Start Game!" << endl;
     Board board;
-    Player playerBlack(-1), playerWhite(1);
+    Player playerBlack(-1, 0), playerWhite(1, 0);
 
     board.printBoard();
     while (!board.gameComplete()) {
