@@ -62,6 +62,23 @@ void Board::makeMove(const Int2D pos) {
     playersTurn *= -1;
 }
 
+void Board::printWinningPlayer() {
+    if (!gameComplete()) {
+        cout << "game is not finished" << endl;
+        return;
+    }
+    int sum = 0;
+    for (auto row : board) {
+        for (auto i : row) {
+            sum += i;
+        }
+    }
+    if (sum > 0) cout << "White won!" << endl;
+    else cout << "Black won!" << endl;
+}
+
+// --------------private functions------------------------
+
 void Board::flipAllInBetween(Int2D pos) {
     vector<Int2D> positionsCaptured = getPositionsCaptured(board, playersTurn, pos);
     for (const auto& pc : positionsCaptured) {
