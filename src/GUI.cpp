@@ -1,5 +1,6 @@
 #include "raylib.h"
 #include <memory>
+#include <iostream>
 
 #include "../include/Board.hpp"
 
@@ -14,7 +15,11 @@ void startGUI(const std::shared_ptr<Board>& board)
     InitWindow(screenWidth, screenHeight, "OTHELLO");
     SetTargetFPS(60);
 
+    // Color lightGreen(144, 238, 144, 255);
+    Color lightGreen = CLITERAL(Color){ 144, 238, 144, 255 };
+
     std::array<std::array<int, 8>, 8> b;
+    Int2D clickedCell(-1, -1);
 
     while (!WindowShouldClose())
     {
@@ -25,18 +30,29 @@ void startGUI(const std::shared_ptr<Board>& board)
         BeginDrawing();
             ClearBackground(RAYWHITE);
 
-            for (int i = 0; i < gridSize; i++) {
-                for (int j = 0; j < gridSize; j++) {
-                    DrawRectangle(boardMarginLeft + i*cellSize, j*cellSize, cellSize, cellSize, GREEN);
-                    DrawRectangleLines(boardMarginLeft + i*cellSize, j*cellSize, cellSize, cellSize, BLACK);
-                    if (b[i][j]) {
-                        auto color = b[i][j] == 1 ? WHITE : BLACK;
-                        DrawCircle(boardMarginLeft + i*cellSize + cellSize/2, j*cellSize + cellSize/2, cellSize/3, color);
+            for (int y = 0; y < gridSize; y++) {
+                for (int x = 0; x < gridSize; x++) {
+                    auto color = y == clickedCell.y && x == clickedCell.x ? lightGreen : GREEN;
+                    DrawRectangle(boardMarginLeft + x*cellSize, y*cellSize, cellSize, cellSize, color);
+                    DrawRectangleLines(boardMarginLeft + x*cellSize, y*cellSize, cellSize, cellSize, BLACK);
+                    if (b[y][x]) {
+                        color = b[y][x] == 1 ? WHITE : BLACK;
+                        DrawCircle(boardMarginLeft + x*cellSize + cellSize/2, y*cellSize + cellSize/2, cellSize/3, color);
                     }
                 }
             }
             
-
+            if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+                Vector2 mousePos = GetMousePosition();
+                if (boardMarginLeft < mousePos.x && boardMarginLeft+cellSize*8 > mousePos.x && cellSize*8 > mousePos.y ) {
+                    int y = mousePos.y / cellSize;
+                    int x = (mousePos.x - boardMarginLeft) / cellSize;
+                    clickedCell = {y, x};
+                    std::cout << "Clicked cell: " << clickedCell << std::endl;
+                } else {
+                    clickedCell = {-1,-1};
+                }
+            }
 
         EndDrawing();
     }
