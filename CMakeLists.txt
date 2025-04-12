@@ -11,6 +11,11 @@ add_executable(${PROJECT_NAME}
     src/Player.cpp
     src/Int2D.cpp
     src/players/randomPlayer.cpp
+    src/GUI.cpp
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/include)
+
+set(CMAKE_TOOLCHAIN_FILE "C:/c_and_cpp_developer_tools/vcpkg/scripts/buildsystems/vcpkg.cmake")
+find_package(raylib CONFIG REQUIRED)
+target_link_libraries(${PROJECT_NAME} PRIVATE raylib)
