@@ -43,6 +43,34 @@ void drawPlayerVisuals(std::shared_ptr<GameInfo> gameInfo, int player, int width
     }
 }
 
+void makeNewGameButton(std::shared_ptr<GameInfo> gameInfo, int center, int y, std::unique_ptr<std::thread>& t) {
+    int newGameFontSize = 30;
+    int marginWidth = 10;
+    int marginHight = 5;
+    const char* text = "New Game";
+    int newGameWidth = MeasureText(text, newGameFontSize) + marginWidth * 2;
+    int newGameHeight = newGameFontSize + marginHight * 2;
+    Rectangle button = { center - newGameWidth / 2, y, newGameWidth, newGameHeight };
+    
+    Color buttonColor = LIGHTGRAY;
+    if (CheckCollisionPointRec(GetMousePosition(), button)) {
+        buttonColor = GRAY;
+        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+            buttonColor = DARKGRAY;
+            gameInfo -> setStopGame();
+            if (t -> joinable()) {
+                t -> join();
+            }
+            gameInfo -> newGame();
+            t = std::make_unique<std::thread>([gameInfo]() {
+                startGame(gameInfo);
+            });
+        }
+    }
+    DrawRectangleRec(button, buttonColor);
+    DrawText(text, button.x + marginWidth, button.y + marginHight, newGameFontSize, BLACK);
+}
+
 void startGUI()
 {
     const int gridSize = 8;
@@ -64,7 +92,7 @@ void startGUI()
     Int2D clickedCell(-1, -1);
 
     std::shared_ptr<GameInfo> gameInfo = std::make_shared<GameInfo>();
-    std::thread t1([gameInfo]() {
+    std::unique_ptr<std::thread> t = std::make_unique<std::thread>([gameInfo]() {
         startGame(gameInfo);
     });
 
@@ -125,10 +153,15 @@ void startGUI()
                 DrawText(buttonsText[i%buttonsText.size()].c_str(), button.x + 10, button.y + 5, 20, BLACK);
             }
 
+            int hight = buttons[buttons.size()-1].y + buttons[buttons.size()-1].height + 20;
+            makeNewGameButton(gameInfo, screenWidth/2, hight, t);
+
         EndDrawing();
     }
 
     gameInfo -> setStopGame();
-    t1.join();
+    if (t -> joinable()) {
+        t -> join();
+    }
     CloseWindow();
 }

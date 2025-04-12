@@ -15,7 +15,6 @@ public:
     ~GameInfo();
 
     std::array<std::array<int, 8>, 8> getBoard() const;
-    void newBoard();
     void printBoard() const;
     int getPlayersTurn() const;
     bool gameComplete();
@@ -32,6 +31,7 @@ public:
 
     void setStopGame();
     bool getStopGame() const;
+    void newGame();
 };
 
 #endif

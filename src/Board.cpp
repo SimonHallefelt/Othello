@@ -55,7 +55,7 @@ void Board::makeMove(const Int2D pos) {
         playersTurn *= -1;
         return;
     }
-    assert(isMoveLegal(board, playersTurn, pos));
+    assert(isMoveLegal(board, playersTurn, pos) && !board[pos.y][pos.x]);
     board[pos.y][pos.x] = playersTurn;
     flipAllInBetween(pos);
     playersTurn *= -1;

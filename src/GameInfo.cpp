@@ -12,8 +12,9 @@ GameInfo::~GameInfo() {
 std::array<std::array<int, 8>, 8> GameInfo::getBoard() const {
     return board.getBoard();
 }
-void GameInfo::newBoard() {
+void GameInfo::newGame() {
     board.newBoard();
+    stopGame = false;
 }
 void GameInfo::printBoard() const {
     board.printBoard();
@@ -40,7 +41,7 @@ void GameInfo::setPlayerType(int player, int playerType) {
 
 void GameInfo::setManualMove(Int2D pos) {
     assert(pos.x >= 0 && pos.x < 8 && pos.y >= 0 && pos.y < 8);
-    if (!isMoveLegal(board.getBoard(), board.getPlayersTurn(), pos)) return;
+    if (!isMoveLegal(board.getBoard(), board.getPlayersTurn(), pos) || board.getBoard()[pos.y][pos.x]) return;
     manualMove = pos;
     hasManualMove = true;
 }

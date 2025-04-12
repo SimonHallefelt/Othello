@@ -30,4 +30,5 @@ void startGame(const std::shared_ptr<GameInfo>& gameInfo) {
     }
     gameEnd:
     gameInfo -> printWinner();
+    
 }
