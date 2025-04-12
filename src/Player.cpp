@@ -15,6 +15,10 @@ int Player::getPlayer() const {
     return player;
 }
 
+int Player::getPlayerType() const {
+    return playerType;
+}
+
 Int2D Player::move(std::array<std::array<int, 8>, 8>& board) const {
     std::vector<Int2D> possibleMoves = getLegalMoves(board, player);
     if (possibleMoves.size() == 0) return {-1, -1}; // no legal move

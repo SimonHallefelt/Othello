@@ -9,6 +9,7 @@ private:
     Board board;
     Player blackPlayer, whitePlayer;
     Int2D manualMove;
+    bool hasManualMove;
 public:
     GameInfo();
     ~GameInfo();
@@ -22,6 +23,11 @@ public:
     void printWinner();
 
     const Player& getCurrentPlayer();
+
+    void setManualMove(Int2D pos);
+    void GameInfo::setHasManualMove(bool b);
+    Int2D getManualMove() const;
+    bool GameInfo::getHasManualMove() const;
 };
 
 #endif

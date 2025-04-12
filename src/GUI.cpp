@@ -53,6 +53,7 @@ void startGUI()
                     int y = mousePos.y / cellSize;
                     int x = (mousePos.x - boardMarginLeft) / cellSize;
                     clickedCell = {y, x};
+                    gameInfo -> setManualMove(clickedCell);
                     std::cout << "Clicked cell: " << clickedCell << std::endl;
                 } else {
                     clickedCell = {-1,-1};

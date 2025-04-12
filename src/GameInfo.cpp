@@ -1,6 +1,7 @@
 #include <../include/GameInfo.hpp>
+#include <cassert>
 
-GameInfo::GameInfo() : blackPlayer(-1, 1), whitePlayer(1, 1), manualMove(-1, -1) {
+GameInfo::GameInfo() : blackPlayer(-1, 1), whitePlayer(1, 0), manualMove(-1, -1) {
     std::cout << "Created GameInfo" << std::endl;
 }
 
@@ -32,4 +33,23 @@ void GameInfo::printWinner() {
 
 const Player& GameInfo::getCurrentPlayer() {
     return board.getPlayersTurn() == 1 ? whitePlayer : blackPlayer;
+}
+
+void GameInfo::setManualMove(Int2D pos) {
+    assert(pos.x >= 0 && pos.x < 8 && pos.y >= 0 && pos.y < 8);
+    if (!isMoveLegal(board.getBoard(), board.getPlayersTurn(), pos)) return;
+    manualMove = pos;
+    hasManualMove = true;
+}
+
+void GameInfo::setHasManualMove(bool b) {
+    hasManualMove = b;
+}
+
+Int2D GameInfo::getManualMove() const {
+    return manualMove;
+}
+
+bool GameInfo::getHasManualMove() const {
+    return hasManualMove;
 }
