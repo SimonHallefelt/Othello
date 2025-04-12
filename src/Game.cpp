@@ -11,11 +11,15 @@ void startGame(const std::shared_ptr<GameInfo>& gameInfo) {
     while (!gameInfo -> gameComplete() && !gameInfo -> getStopGame()) {
         const Player& currentPlayer = gameInfo -> getCurrentPlayer();
         if (!currentPlayer.getPlayerType()) { // human move
-            while (!gameInfo -> getHasManualMove()) {
-                std::this_thread::sleep_for(std::chrono::milliseconds(10));
-                if (gameInfo -> getStopGame()) goto gameEnd;
+            if (getLegalMoves(gameInfo -> getBoard(), currentPlayer.getPlayer()).size()) {
+                while (!gameInfo -> getHasManualMove()) {
+                    std::this_thread::sleep_for(std::chrono::milliseconds(10));
+                    if (gameInfo -> getStopGame()) goto gameEnd;
+                }
+                pos = gameInfo -> getManualMove();
+            } else {
+                pos = {-1, -1};
             }
-            pos = gameInfo -> getManualMove();
         } else { // bot move
             pos = currentPlayer.move(gameInfo -> getBoard());
         }

@@ -34,6 +34,9 @@ void GameInfo::printWinner() {
 const Player& GameInfo::getCurrentPlayer() {
     return board.getPlayersTurn() == 1 ? whitePlayer : blackPlayer;
 }
+void GameInfo::setPlayerType(int player, int playerType) {
+    (player == 1 ? whitePlayer : blackPlayer).setPlayerType(playerType);
+}
 
 void GameInfo::setManualMove(Int2D pos) {
     assert(pos.x >= 0 && pos.x < 8 && pos.y >= 0 && pos.y < 8);

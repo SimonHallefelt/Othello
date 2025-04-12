@@ -7,12 +7,14 @@
 #include "../include/GameInfo.hpp"
 #include "../include/Game.hpp"
 
-void drawPlayerVisuals(std::shared_ptr<GameInfo> gameInfo, int player, int width, Int2D origin) {
+void drawPlayerVisuals(std::shared_ptr<GameInfo> gameInfo, int player, int width, Int2D origin, 
+        std::vector<std::string> buttonsText, std::vector<Rectangle>& buttons) {
     int titleFontSize = 30;
     const char* title = player == -1 ? "BLACK" : "white";
     int titleWidth = MeasureText(title, titleFontSize);
     int titleHeight = titleFontSize;
     DrawText(title, origin.x+width/2 - titleWidth / 2, origin.y - titleHeight / 2, titleFontSize, BLACK);
+    origin.add({titleHeight+10, 0});
 
     int score = 0;
     for (const auto& row : gameInfo -> getBoard()) {
@@ -23,19 +25,37 @@ void drawPlayerVisuals(std::shared_ptr<GameInfo> gameInfo, int player, int width
     int scoreFontSize = 30;
     int scoreWidth = MeasureText(std::to_string(score).c_str(), scoreFontSize);
     int scoreHeight = scoreFontSize;
-    DrawText(std::to_string(score).c_str(), origin.x+width/2 - scoreWidth / 2, origin.y+titleHeight+10 - scoreHeight / 2, scoreFontSize, BLACK);
+    DrawText(std::to_string(score).c_str(), origin.x+width/2 - scoreWidth / 2, origin.y - scoreHeight / 2, scoreFontSize, BLACK);
+    origin.add({scoreHeight+10, 0});
+
+    if (buttons.size() < buttonsText.size()*2) {
+        int buttonFontSize = 20;
+        int buttonMarginWidth = 10;
+        int buttonMarginHight = 5;
+        for (int i = 0; i < buttonsText.size(); i++) {
+            const auto& str = buttonsText[i];
+            int buttonWidth = MeasureText(str.c_str(), buttonFontSize) + buttonMarginWidth * 2;
+            int buttonHeight = buttonFontSize + buttonMarginHight * 2;
+            Rectangle button = { origin.x+width/2 - buttonWidth/2, origin.y, buttonWidth, buttonHeight };
+            origin.add({buttonFontSize+10, 0});
+            buttons.push_back(button);
+        }
+    }
 }
 
 void startGUI()
 {
     const int gridSize = 8;
     const int screenWidth = 800;
-    const int screenHeight = 800;
+    const int screenHeight = 900;
     const int boardSize = screenWidth * 3 / 4;
     int cellSize = boardSize / gridSize;
     int boardMarginLeft = (screenWidth - boardSize) / 2;
     InitWindow(screenWidth, screenHeight, "OTHELLO");
     SetTargetFPS(60);
+
+    std::vector<std::string> buttonsText = {"Manual", "Random"};
+    std::vector<Rectangle> buttons;
 
     Color lightGreen = CLITERAL(Color){ 144, 238, 144, 255 };
     Color transparentWhite = CLITERAL(Color){ 255, 255, 255, 130 };
@@ -67,12 +87,11 @@ void startGUI()
                 }
             }
 
-            if (gameInfo -> getCurrentPlayer().getPlayerType() == 0) { // manual player
-                auto legalMoves = getLegalMoves(board, gameInfo -> getCurrentPlayer().getPlayer());
-                for (const auto& pm : legalMoves) {
-                    DrawCircle(boardMarginLeft + pm.x*cellSize + cellSize/2, pm.y*cellSize + cellSize/2, cellSize/5, transparentWhite);
-                }
+            auto legalMoves = getLegalMoves(board, gameInfo -> getCurrentPlayer().getPlayer());
+            for (const auto& pm : legalMoves) {
+                DrawCircle(boardMarginLeft + pm.x*cellSize + cellSize/2, pm.y*cellSize + cellSize/2, cellSize/5, transparentWhite);
             }
+            
             
             if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
                 Vector2 mousePos = GetMousePosition();
@@ -88,9 +107,23 @@ void startGUI()
             }
 
             Int2D origin(boardSize+25, (screenWidth-boardSize)/2);
-            drawPlayerVisuals(gameInfo, -1, boardSize/2, origin);
+            drawPlayerVisuals(gameInfo, -1, boardSize/2, origin, buttonsText, buttons);
             origin.add({0, boardSize/2});
-            drawPlayerVisuals(gameInfo, 1, boardSize/2, origin);
+            drawPlayerVisuals(gameInfo, 1, boardSize/2, origin, buttonsText, buttons);
+
+            for(int i = 0; i < buttons.size(); i++) {
+                const auto& button = buttons[i];
+                Color buttonColor = LIGHTGRAY;
+                if (CheckCollisionPointRec(GetMousePosition(), button)) {
+                    buttonColor = GRAY;
+                    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+                        buttonColor = DARKGRAY;
+                        gameInfo -> setPlayerType(i < buttonsText.size() ? -1 : 1, i % buttonsText.size());
+                    }
+                }
+                DrawRectangleRec(button, buttonColor);
+                DrawText(buttonsText[i%buttonsText.size()].c_str(), button.x + 10, button.y + 5, 20, BLACK);
+            }
 
         EndDrawing();
     }

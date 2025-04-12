@@ -23,6 +23,7 @@ public:
     void printWinner();
 
     const Player& getCurrentPlayer();
+    void setPlayerType(int player, int playerType);
 
     void setManualMove(Int2D pos);
     void setHasManualMove(bool b);
