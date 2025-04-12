@@ -16,7 +16,7 @@ public:
     ~Player();
 
     int getPlayer() const;
-    Int2D move(std::array<std::array<int, 8>, 8>& board);
+    Int2D move(std::array<std::array<int, 8>, 8>& board) const;
 };
 
 #endif

@@ -1,10 +1,12 @@
 #include "raylib.h"
 #include <memory>
+#include <thread>
 #include <iostream>
 
-#include "../include/Board.hpp"
+#include "../include/GameInfo.hpp"
+#include "../include/Game.hpp"
 
-void startGUI(const std::shared_ptr<Board>& board)
+void startGUI()
 {
     const int gridSize = 8;
     const int screenWidth = 800;
@@ -15,15 +17,18 @@ void startGUI(const std::shared_ptr<Board>& board)
     InitWindow(screenWidth, screenHeight, "OTHELLO");
     SetTargetFPS(60);
 
-    // Color lightGreen(144, 238, 144, 255);
     Color lightGreen = CLITERAL(Color){ 144, 238, 144, 255 };
 
     std::array<std::array<int, 8>, 8> b;
     Int2D clickedCell(-1, -1);
 
-    while (!WindowShouldClose())
-    {
-        b = board -> getBoard();
+    std::shared_ptr<GameInfo> gameInfo = std::make_shared<GameInfo>();
+    std::thread t1([gameInfo]() {
+        startGame(gameInfo);
+    });
+
+    while (!WindowShouldClose()) {
+        b = gameInfo -> getBoard();
 
 
 
@@ -57,5 +62,6 @@ void startGUI(const std::shared_ptr<Board>& board)
         EndDrawing();
     }
 
+    t1.join();
     CloseWindow();
 }

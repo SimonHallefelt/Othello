@@ -2,17 +2,15 @@
 #include "../include/LegalMoves.hpp"
 #include <cassert>
 
-using namespace std;
-
 
 // white is 1 and black is -1
 
 Board::Board() {
-    cout << "Board was Generated" << endl;
+    std::cout << "Board was Generated" << std::endl;
     newBoard();
 }
 Board::~Board() {
-    cout << "Board was Destroyed" << endl;
+    std::cout << "Board was Destroyed" << std::endl;
 }
 
 void Board::newBoard() {
@@ -27,14 +25,14 @@ void Board::newBoard() {
 void Board::printBoard() const {
     for (auto row : board) {
         for (auto i : row) {
-            if (i == -1) cout << i << " ";
-            else cout << " " << i << " ";
+            if (i == -1) std::cout << i << " ";
+            else std::cout << " " << i << " ";
         }
-        cout << endl;
+        std::cout << std::endl;
     }
 };
 
-array<array<int, 8>, 8> Board::getBoard() const {
+std::array<std::array<int, 8>, 8> Board::getBoard() const {
     return board;
 }
 
@@ -65,7 +63,7 @@ void Board::makeMove(const Int2D pos) {
 
 void Board::printWinner() {
     if (!gameComplete()) {
-        cout << "game is not finished" << endl;
+        std::cout << "game is not finished" << std::endl;
         return;
     }
     int sum = 0;
@@ -74,17 +72,17 @@ void Board::printWinner() {
             sum += i;
         }
     }
-    if (sum > 0) cout << "White won!" << endl;
-    else cout << "Black won!" << endl;
+    if (sum > 0) std::cout << "White won!" << std::endl;
+    else std::cout << "Black won!" << std::endl;
 }
 
 // --------------private functions------------------------
 
 void Board::flipAllInBetween(Int2D pos) {
-    vector<Int2D> positionsCaptured = getPositionsCaptured(board, playersTurn, pos);
+    std::vector<Int2D> positionsCaptured = getPositionsCaptured(board, playersTurn, pos);
     for (const auto& pc : positionsCaptured) {
         board[pc.y][pc.x] = playersTurn;
-        cout << pc << " ";
+        std::cout << pc << " ";
     }
-    cout << endl;
+    std::cout << std::endl;
 }

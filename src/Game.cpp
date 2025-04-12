@@ -1,23 +1,18 @@
 #include "../include/Game.hpp"
-#include "../include/LegalMoves.hpp"
-#include "../include/Player.hpp"
-#include "../include/Int2D.hpp"
 #include <iostream>
 #include <vector>
-using namespace std;
 
-void startGame(const std::shared_ptr<Board>& board) {
-    cout << "Start Game!" << endl;
-    // Board board;
-    Player playerBlack(-1, 0), playerWhite(1, 0);
+void startGame(const std::shared_ptr<GameInfo>& gameInfo) {
+    std::cout << "Start Game!" << std::endl;
 
-    board -> printBoard();
-    while (!board -> gameComplete()) {
-        Int2D pos = board -> getPlayersTurn() == 1 ? playerWhite.move(board -> getBoard()) : playerBlack.move(board -> getBoard());
-        cout << "player " << (board -> getPlayersTurn() == 1 ? "White" : "Black") << " selected move: " << pos << endl;
-        board -> makeMove(pos);
-        board -> printBoard();
+    gameInfo -> printBoard();
+    while (!gameInfo -> gameComplete()) {
+        const Player& currentPlayer = gameInfo -> getCurrentPlayer();
+        Int2D pos = currentPlayer.move(gameInfo -> getBoard());
+        std::cout << "player " << (currentPlayer.getPlayer() == 1 ? "White" : "Black") << " selected move: " << pos << std::endl;
+        gameInfo -> makeMove(pos);
+        gameInfo -> printBoard();
     }
-    board -> printWinner();
+    gameInfo -> printWinner();
 
 }

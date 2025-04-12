@@ -10,7 +10,7 @@ class Board {
         std::array<std::array<int, 8>, 8> board;
         int playersTurn;
     
-        void Board::flipAllInBetween(Int2D pos);
+        void flipAllInBetween(Int2D pos);
     public:
         Board();
         ~Board();
@@ -18,11 +18,11 @@ class Board {
         void newBoard();
         void printBoard() const;
 
-        std::array<std::array<int, 8>, 8> Board::getBoard() const;
-        int Board::getPlayersTurn() const;
-        bool Board::gameComplete();
-        void Board::makeMove(Int2D pos);
-        void Board::printWinner();
+        std::array<std::array<int, 8>, 8> getBoard() const;
+        int getPlayersTurn() const;
+        bool gameComplete();
+        void makeMove(Int2D pos);
+        void printWinner();
     };
 
 #endif
