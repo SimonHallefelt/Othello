@@ -2,16 +2,36 @@
 #include <memory>
 #include <thread>
 #include <iostream>
+#include <string>
 
 #include "../include/GameInfo.hpp"
 #include "../include/Game.hpp"
+
+void drawPlayerVisuals(std::shared_ptr<GameInfo> gameInfo, int player, int width, Int2D origin) {
+    int titleFontSize = 30;
+    const char* title = player == -1 ? "BLACK" : "white";
+    int titleWidth = MeasureText(title, titleFontSize);
+    int titleHeight = titleFontSize;
+    DrawText(title, origin.x+width/2 - titleWidth / 2, origin.y - titleHeight / 2, titleFontSize, BLACK);
+
+    int score = 0;
+    for (const auto& row : gameInfo -> getBoard()) {
+        for (const auto& value : row) {
+            score += value == player;
+        }
+    }
+    int scoreFontSize = 30;
+    int scoreWidth = MeasureText(std::to_string(score).c_str(), scoreFontSize);
+    int scoreHeight = scoreFontSize;
+    DrawText(std::to_string(score).c_str(), origin.x+width/2 - scoreWidth / 2, origin.y+titleHeight+10 - scoreHeight / 2, scoreFontSize, BLACK);
+}
 
 void startGUI()
 {
     const int gridSize = 8;
     const int screenWidth = 800;
     const int screenHeight = 800;
-    const int boardSize = 600;
+    const int boardSize = screenWidth * 3 / 4;
     int cellSize = boardSize / gridSize;
     int boardMarginLeft = (screenWidth - boardSize) / 2;
     InitWindow(screenWidth, screenHeight, "OTHELLO");
@@ -30,7 +50,6 @@ void startGUI()
 
     while (!WindowShouldClose()) {
         board = gameInfo -> getBoard();
-
 
 
         BeginDrawing();
@@ -67,6 +86,11 @@ void startGUI()
                     clickedCell = {-1,-1};
                 }
             }
+
+            Int2D origin(boardSize+25, (screenWidth-boardSize)/2);
+            drawPlayerVisuals(gameInfo, -1, boardSize/2, origin);
+            origin.add({0, boardSize/2});
+            drawPlayerVisuals(gameInfo, 1, boardSize/2, origin);
 
         EndDrawing();
     }
