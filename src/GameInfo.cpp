@@ -1,7 +1,7 @@
 #include <../include/GameInfo.hpp>
 #include <cassert>
 
-GameInfo::GameInfo() : blackPlayer(-1, 1), whitePlayer(1, 0), manualMove(-1, -1) {
+GameInfo::GameInfo() : blackPlayer(-1, 1), whitePlayer(1, 0), manualMove(-1, -1), stopGame(0) {
     std::cout << "Created GameInfo" << std::endl;
 }
 
@@ -52,4 +52,11 @@ Int2D GameInfo::getManualMove() const {
 
 bool GameInfo::getHasManualMove() const {
     return hasManualMove;
+}
+
+void GameInfo::setStopGame() {
+    stopGame = true;
+}
+bool GameInfo::getStopGame() const {
+    return stopGame;
 }

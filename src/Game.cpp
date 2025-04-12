@@ -8,11 +8,12 @@ void startGame(const std::shared_ptr<GameInfo>& gameInfo) {
 
     Int2D pos(-1,-1);
     gameInfo -> printBoard();
-    while (!gameInfo -> gameComplete()) {
+    while (!gameInfo -> gameComplete() && !gameInfo -> getStopGame()) {
         const Player& currentPlayer = gameInfo -> getCurrentPlayer();
         if (!currentPlayer.getPlayerType()) { // human move
             while (!gameInfo -> getHasManualMove()) {
                 std::this_thread::sleep_for(std::chrono::milliseconds(10));
+                if (gameInfo -> getStopGame()) goto gameEnd;
             }
             pos = gameInfo -> getManualMove();
         } else { // bot move
@@ -23,6 +24,6 @@ void startGame(const std::shared_ptr<GameInfo>& gameInfo) {
         gameInfo -> printBoard();
         gameInfo -> setHasManualMove(false);
     }
+    gameEnd:
     gameInfo -> printWinner();
-
 }

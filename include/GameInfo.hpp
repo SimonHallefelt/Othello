@@ -9,7 +9,7 @@ private:
     Board board;
     Player blackPlayer, whitePlayer;
     Int2D manualMove;
-    bool hasManualMove;
+    bool hasManualMove, stopGame;
 public:
     GameInfo();
     ~GameInfo();
@@ -25,9 +25,12 @@ public:
     const Player& getCurrentPlayer();
 
     void setManualMove(Int2D pos);
-    void GameInfo::setHasManualMove(bool b);
+    void setHasManualMove(bool b);
     Int2D getManualMove() const;
-    bool GameInfo::getHasManualMove() const;
+    bool getHasManualMove() const;
+
+    void setStopGame();
+    bool getStopGame() const;
 };
 
 #endif
