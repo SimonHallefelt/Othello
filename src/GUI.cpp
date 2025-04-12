@@ -18,6 +18,7 @@ void startGUI()
     SetTargetFPS(60);
 
     Color lightGreen = CLITERAL(Color){ 144, 238, 144, 255 };
+    Color transparentWhite = CLITERAL(Color){ 255, 255, 255, 130 };
 
     std::array<std::array<int, 8>, 8> board;
     Int2D clickedCell(-1, -1);
@@ -49,8 +50,8 @@ void startGUI()
 
             if (gameInfo -> getCurrentPlayer().getPlayerType() == 0) { // manual player
                 auto legalMoves = getLegalMoves(board, gameInfo -> getCurrentPlayer().getPlayer());
-                for (const auto& possibleMove : legalMoves) {
-
+                for (const auto& pm : legalMoves) {
+                    DrawCircle(boardMarginLeft + pm.x*cellSize + cellSize/2, pm.y*cellSize + cellSize/2, cellSize/5, transparentWhite);
                 }
             }
             
