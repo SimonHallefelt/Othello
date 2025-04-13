@@ -82,7 +82,7 @@ void startGUI()
     InitWindow(screenWidth, screenHeight, "OTHELLO");
     SetTargetFPS(60);
 
-    std::vector<std::string> buttonsText = {"Manual", "Random"};
+    std::vector<std::string> buttonsText = {"Manual", "Random", "Smart Bot"};
     std::vector<Rectangle> buttons;
 
     Color lightGreen = CLITERAL(Color){ 144, 238, 144, 255 };

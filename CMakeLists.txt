@@ -9,8 +9,9 @@ add_executable(${PROJECT_NAME}
     src/Board.cpp
     src/LegalMoves.cpp
     src/Player.cpp
+    src/players/RandomPlayer.cpp
+    src/players/AlphaBetaPlayer.cpp
     src/Int2D.cpp
-    src/players/randomPlayer.cpp
     src/GUI.cpp
     src/GameInfo.cpp
 )

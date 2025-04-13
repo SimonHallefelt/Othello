@@ -10,7 +10,7 @@ void startGame(const std::shared_ptr<GameInfo>& gameInfo) {
     gameInfo -> printBoard();
     while (!gameInfo -> gameComplete() && !gameInfo -> getStopGame()) {
         const Player& currentPlayer = gameInfo -> getCurrentPlayer();
-        if (!currentPlayer.getPlayerType()) { // human move
+        if (!currentPlayer.getPlayerType()) { // manual move
             if (getLegalMoves(gameInfo -> getBoard(), currentPlayer.getPlayer()).size()) {
                 while (!gameInfo -> getHasManualMove()) {
                     std::this_thread::sleep_for(std::chrono::milliseconds(10));

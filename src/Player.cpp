@@ -1,6 +1,7 @@
 #include "../include/Player.hpp"
 
-extern Int2D randomPlayerMove(std::array<std::array<int, 8>, 8>& board, int player);
+extern Int2D RandomPlayerMove(std::array<std::array<int, 8>, 8>& board, int player);
+extern Int2D AlphaBetaPlayerMove(std::array<std::array<int, 8>, 8>& board, int player);
 
 Player::Player(const int player, int playerType) : 
 player(player), playerType(playerType) {
@@ -29,8 +30,10 @@ Int2D Player::move(std::array<std::array<int, 8>, 8>& board) const {
 
     switch (playerType) {
     case 1:
-        return randomPlayerMove(board, player);
+        return RandomPlayerMove(board, player);
+    case 2:
+        return AlphaBetaPlayerMove(board, player);
     default:
-        return randomPlayerMove(board, player);
+        return RandomPlayerMove(board, player);
     }
 }

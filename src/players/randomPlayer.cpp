@@ -1,9 +1,8 @@
-#include "../../include/Int2D.hpp"
-#include "../../include/LegalMoves.hpp"
+#include <LegalMoves.hpp>
+
 #include <random>
 
-
-Int2D randomPlayerMove(std::array<std::array<int, 8>, 8>& board, int player) {
+Int2D RandomPlayerMove(std::array<std::array<int, 8>, 8>& board, int player) {
     std::vector<Int2D> possibleMoves = getLegalMoves(board, player);
     std::random_device rd;
     std::mt19937 gen(rd());
