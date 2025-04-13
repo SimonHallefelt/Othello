@@ -50,6 +50,7 @@ std::vector<Int2D> getPositionsCaptured(const std::array<std::array<int, 8>, 8>&
         {0, 1}, {1, 0}, {0, -1}, {-1, 0}, {-1, -1}, {1, 1}, {1, -1}, {-1, 1}
     }};
     std::vector<Int2D> positionsCaptured = {};
+    if (placement.y == -1) return positionsCaptured;
 
     int value;
     bool pass;
