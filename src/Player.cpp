@@ -1,7 +1,7 @@
 #include "../include/Player.hpp"
 
-extern Int2D RandomPlayerMove(std::array<std::array<int, 8>, 8>& board, int player);
-extern Int2D AlphaBetaPlayerMove(std::array<std::array<int, 8>, 8>& board, int player);
+extern Int2D RandomPlayerMove(const std::array<std::array<int, 8>, 8>& board, int player);
+extern Int2D AlphaBetaPlayerMove(const std::array<std::array<int, 8>, 8>& board, int player);
 
 Player::Player(const int player, int playerType) : 
 player(player), playerType(playerType) {
@@ -24,7 +24,7 @@ void Player::setPlayerType(int pt) {
     playerType = pt;
 }
 
-Int2D Player::move(std::array<std::array<int, 8>, 8>& board) const {
+Int2D Player::move(const std::array<std::array<int, 8>, 8>& board) const {
     std::vector<Int2D> possibleMoves = getLegalMoves(board, player);
     if (possibleMoves.size() == 0) return {-1, -1}; // no legal move
 

@@ -42,7 +42,8 @@ int alphaBetaPruning(std::array<std::array<int, 8>, 8>& board, int alpha, int be
     return player == 1 ? alpha : beta;
 }
 
-Int2D AlphaBetaPlayerMove(std::array<std::array<int, 8>, 8>& board, int player) {
+Int2D AlphaBetaPlayerMove(const std::array<std::array<int, 8>, 8>& initialBoard, int player) {
+    std::array<std::array<int, 8>, 8> board = initialBoard;
     if (player == -1) {
         for (int y = 0; y < 8; y++) {
             for (int x = 0; x < 8; x++) {
